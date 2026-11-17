@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الضرب في عدد من رقم واحد – بدون إعادة تجميع</title>
+<style>
+:root{color-scheme:light;--bg:#fff7e6;--ink:#3b2a63;--card:#ffffff;--pri:#8b5cf6;--t:#3b82f6;--o:#f59e0b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,Arial,sans-serif}
+h1{font-size:1.25rem;text-align:center;margin:10px 8px 4px}
+.wrap{position:relative;max-width:980px;margin:auto;padding:10px 10px 16px}
+.copyrights-text{
+  position:relative; display:inline-block; z-index:2;
+  max-width:180px; margin:2px 0 8px 0;
+  padding:3px 6px; border:1px solid rgba(59,42,99,.15); border-radius:999px;
+  background:rgba(255,255,255,.72); color:var(--ink); font-size:.58rem;
+  font-weight:600; line-height:1.2; text-align:left; direction:ltr; overflow-wrap:anywhere;
+  box-shadow:0 2px 8px rgba(59,42,99,.06);
+}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+#c{flex:2 1 420px;height:360px;border-radius:18px;background:linear-gradient(#c7f0ff,#e9fbff);overflow:hidden;box-shadow:0 4px 14px #0002}
+#c canvas{display:block}
+.panel{flex:1 1 200px;background:var(--card);border-radius:18px;padding:12px;box-shadow:0 4px 14px #0002;text-align:center}
+.eq{direction:ltr;display:inline-block;font-size:2.1rem;font-weight:700;line-height:1.3;margin-top:6px}
+.eq div{display:flex;justify-content:flex-end;gap:14px}
+.eq span{width:1.3em;text-align:center}
+.line{border-top:4px solid var(--ink);margin:2px 0}
+.hide{opacity:0;transition:opacity .5s}.show{opacity:1}
+.t{color:var(--t)}.o{color:var(--o)}
+.eq{margin-right:1.4em}.mr{position:relative}.mr .x{position:absolute;right:-1.3em;top:0}
+#cap{margin:10px 0;background:var(--card);border-radius:16px;padding:12px 16px;font-size:1.2rem;min-height:3.2em;box-shadow:0 3px 10px #0002;border-right:8px solid var(--pri)}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center}
+button,select{font:inherit;font-size:1rem;border:0;border-radius:12px;padding:9px 14px;background:var(--pri);color:#fff;cursor:pointer}
+select{background:#fff;color:var(--ink);border:2px solid var(--pri)}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:8px}
+.dots i{width:12px;height:12px;border-radius:50%;background:#d8cdf5}.dots i.on{background:var(--pri)}
+.key{font-size:.95rem;margin-top:8px}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#1d1535;--ink:#f3ecff;--card:#2c2150}#c{background:linear-gradient(#27407a,#3a5aa0)}select{background:#2c2150}.dots i{background:#4a3d7a}.line{border-color:var(--ink)}}
+#hero{display:flex;gap:8px;align-items:flex-end;margin:10px 0}
+#hero #cap{flex:1;margin:0;position:relative}
+#hero #cap::after{content:"";position:absolute;right:-16px;bottom:18px;border:9px solid transparent;border-left-color:var(--pri)}
+#mouse{width:125px;height:auto;object-fit:contain;border-radius:24px;flex:none;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-7px)}}
+.eye{transform-box:fill-box;transform-origin:center;animation:blink 4s infinite}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+#mouth{transform-box:fill-box;transform-origin:center}
+.talk #mouth{animation:talk .22s infinite alternate}
+@keyframes talk{from{transform:scaleY(.6)}to{transform:scaleY(2.8)}}
+#arm{transform-origin:98px 123px}
+.talk #arm{animation:wave .6s infinite alternate ease-in-out}
+@keyframes wave{from{transform:rotate(-25deg)}to{transform:rotate(10deg)}}
+.tabs{display:flex;gap:8px;justify-content:center;margin:6px 0}
+.gm .row,.gm .ctl,.gm .dots{display:none}
+body:not(.gm) #game{display:none}
+.gctl{display:flex;justify-content:center;margin-top:12px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.opts button{font-size:1.5rem;background:var(--card);color:var(--ink);border:3px solid var(--pri);padding:14px}
+.opts button.ok{background:#22c55e;color:#fff;border-color:#16a34a}
+.opts button.no{background:#ef4444;color:#fff;border-color:#b91c1c}
+#face{position:fixed;left:50%;top:40%;font-size:7rem;transform:translate(-50%,-50%) scale(0);z-index:60;pointer-events:none}
+#face.pop{animation:fpop 1.4s ease}
+@keyframes fpop{0%{transform:translate(-50%,-50%) scale(0);opacity:1}25%{transform:translate(-50%,-50%) scale(1.2)}70%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-80%) scale(1);opacity:0}}
+#hero.happy #mouse{animation:jump .5s 3}
+@keyframes jump{50%{transform:translateY(-22px) rotate(6deg)}}
+#hero.sad #mouse{animation:none;transform:translateY(8px) rotate(-5deg);filter:saturate(.6)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="copyrights-text" aria-label="Copyrights reserved for teacher Shaikha Hamed">
+    استاذة\ شيخه حامد Copyrights reserved &copy;
+  </div>
+  <h1>سينامورول</h1>
+<div class="tabs"><button id="tabL">📖 الدرس</button><button id="tabG" style="background:#ec4899">🎮 لعبة التحدي</button></div>
+<div class="row">
+ <div id="c"></div>
+ <div class="panel">
+  <div>المسألة:</div>
+  <div class="eq" id="eq"></div>
+  <div class="key"><span class="t">■ العشرات</span> &nbsp; <span class="o">■ الآحاد</span></div>
+ </div>
+</div>
+<div id="hero"><img id="mouse" src="idle-cenm.jpg" alt="Waiting"><div id="cap"></div></div>
+<div class="ctl">
+ <select id="ex" aria-label="اختاري مسألة"></select>
+ <button id="prev">⏮ السابق</button>
+ <button id="play">▶ تشغيل تلقائي</button>
+ <button id="next">التالي ⏭</button>
+ <button id="snd">🔊 صوت: إيقاف</button>
+</div>
+<div class="dots" id="dots"></div>
+<div id="game"><div id="gs" style="text-align:center;font-size:1.15rem;font-weight:700"></div><div id="gq" class="panel" style="margin:10px 0;font-size:1.6rem"></div><div id="go" class="opts"></div><div class="gctl"><button id="gn" style="display:none">التالي ⏭</button></div><canvas id="fx" style="position:fixed;left:0;top:0;pointer-events:none;z-index:50"></canvas><div id="face"></div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const EX=[[23,3],[32,2],[41,2],[12,4],[21,4],[13,3]];
+const $=id=>document.getElementById(id);
+let cur=0,step=0,timer=null,speak=false;
+const characterStates={idle:['idle-cenm.jpg','Waiting'],correct:['correct-cenm.jpg','Correct answer'],incorrect:['uncorrect-cenm.jpg','Incorrect answer']};
+Object.values(characterStates).forEach(([src])=>{const img=new Image();img.src=src});
+function setCharacter(state){const [src,alt]=characterStates[state];$('mouse').setAttribute('src',src);$('mouse').alt=alt;$('hero').classList.remove('happy','sad')}
+
+EX.forEach((e,i)=>{const o=document.createElement('option');o.value=i;o.textContent=AR(e[0])+' × '+AR(e[1]);$('ex').appendChild(o)});
+const box=$('c');
+const scene=new THREE.Scene();
+const cam=new THREE.PerspectiveCamera(45,1,.1,100);
+const ren=new THREE.WebGLRenderer({antialias:true,alpha:true});
+box.appendChild(ren.domElement);
+scene.add(new THREE.AmbientLight(0xffffff,.7));
+const dl=new THREE.DirectionalLight(0xffffff,.8);dl.position.set(4,8,6);scene.add(dl);
+function size(){const w=box.clientWidth,h=box.clientHeight;ren.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix()}
+addEventListener('resize',size);size();
+const mT=new THREE.MeshStandardMaterial({color:0x3b82f6,emissive:0x93c5fd,emissiveIntensity:0});
+const mO=new THREE.MeshStandardMaterial({color:0xf59e0b,emissive:0xfde047,emissiveIntensity:0});
+const mP=new THREE.MeshStandardMaterial({color:0xf9a8d4});
+const gC=new THREE.BoxGeometry(.19,.19,.19),gO=new THREE.BoxGeometry(.24,.24,.24),gP=new THREE.BoxGeometry(2,.1,1.2);
+let pcs=[],T,O,N;
+function build(){
+ pcs.forEach(p=>scene.remove(p.obj));pcs=[];
+ const [num,n]=EX[cur];T=Math.floor(num/10);O=num%10;N=n;
+ let ti=0,oi=0;
+ for(let i=0;i<N;i++){
+  const gx=(i-(N-1)/2)*2.3;
+  const pl=new THREE.Mesh(gP,mP);add(pl,'p',[gx,-.1,0],[gx,-3,0]);
+  for(let j=0;j<T;j++){
+   const r=new THREE.Group();
+   for(let k=0;k<10;k++){const c=new THREE.Mesh(gC,mT);c.position.y=k*.2+.1;r.add(c)}
+   add(r,'t',[gx-.35-j*.4,0,0],[-5.3+ti*.42,-1.9,1.2]);ti++;
+  }
+  for(let k=0;k<O;k++){
+   add(new THREE.Mesh(gO,mO),'o',[gx+.35+(k%2)*.27,.14+Math.floor(k/2)*.27,0],[1.2+(oi%5)*.3,-1.75+Math.floor(oi/5)*.3,1.2]);oi++;
+  }
+ }
+ $('eq').innerHTML=`<div><span class="t">${AR(T)}</span><span class="o">${AR(O)}</span></div><div class="mr"><span>${AR(N)}</span><span class="x">×</span></div><div class="line" style="width:100%"></div><div id="r1" class="hide"><span class="t">${AR(T*N)}</span><span class="o">${AR(O*N)}</span></div>`;
+ $('eq').firstChild.style.cssText='';
+}
+function add(obj,kind,base,gather){obj.position.set(...base);obj.scale.setScalar(.01);scene.add(obj);pcs.push({obj,kind,base:new THREE.Vector3(...base),gat:new THREE.Vector3(...gather),d:pcs.length*.03})}
+function caps(){
+ const [num,n]=EX[cur],a=AR(num),t=T*N,o=O*N;
+ return [
+  `أهلًا يا صديقاتي! أنا سينامورول 🐰 عندنا ${AR(N)} مجموعات متساوية، وفي كل مجموعة العدد ${a}: ${AR(T)} من العشرات (القضبان الزرقاء) و${AR(O)} من الآحاد (المكعبات البرتقالية).`,
+  `الخطوة ١: نبدأ دائمًا بالآحاد! ${AR(O)} × ${AR(N)} = ${AR(o)} ← نكتب ${AR(o)} تحت الآحاد.`,
+  `الخطوة ٢: ننتقل إلى العشرات! ${AR(T)} عشرات × ${AR(N)} = ${AR(t)} عشرات، أي ${AR(t*10)} ← نكتب ${AR(t)} تحت العشرات.`,
+  `الخطوة ٣: نجمع كل القضبان في جهة وكل المكعبات في جهة: ${AR(t*10)} + ${AR(o)} = ${AR(t*10+o)}`,
+  `الناتج النهائي: ${a} × ${AR(N)} = ${AR(t*10+o)} 🎉 أحسنتِ! لاحظي: لم نحتج إلى إعادة تجميع لأن ناتج الآحاد أقل من ١٠.`
+ ];
+}
+function show(){
+ setCharacter('idle');
+ const c=caps();$('cap').textContent=c[step];
+ const h=$('hero');h.classList.add('talk');clearTimeout(window._tk);window._tk=setTimeout(()=>h.classList.remove('talk'),Math.min(9000,c[step].length*70));
+ $('r1').className=step>=1?'show':'hide';
+ const r=$('r1').children;r[0].style.opacity=step>=2?1:0;r[1].style.opacity=step>=1?1:0;
+ if(step>=3){r[0].style.opacity=1}
+ [...$('dots').children].forEach((d,i)=>d.className=i===step?'on':'');
+ if(speak&&window.speechSynthesis){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(c[step]);u.lang='ar-SA';speechSynthesis.speak(u)}
+}
+for(let i=0;i<5;i++)$('dots').appendChild(document.createElement('i'));
+function go(s){step=Math.max(0,Math.min(4,s));show()}
+$('next').onclick=()=>go(step+1);$('prev').onclick=()=>go(step-1);
+$('ex').onchange=e=>{cur=+e.target.value;build();go(0)};
+$('snd').onclick=()=>{speak=!speak;$('snd').textContent='🔊 صوت: '+(speak?'تشغيل':'إيقاف');show()};
+$('play').onclick=()=>{
+ if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ تشغيل تلقائي';return}
+ $('play').textContent='⏸ إيقاف مؤقت';if(step>=4)go(0);
+ timer=setInterval(()=>{if(step<4)go(step+1);else{clearInterval(timer);timer=null;$('play').textContent='▶ تشغيل تلقائي'}},6500);
+};
+const clk=new THREE.Clock();
+const camState={radius:10.8,yaw:0.75,pitch:0.7,minRadius:5,maxRadius:18,dragging:false,lastX:0,lastY:0};
+
+box.addEventListener('pointerdown',e=>{
+  camState.dragging=true;
+  camState.lastX=e.clientX;
+  camState.lastY=e.clientY;
+  box.setPointerCapture(e.pointerId);
+});
+
+box.addEventListener('pointermove',e=>{
+  if(!camState.dragging)return;
+  const dx=e.clientX-camState.lastX;
+  const dy=e.clientY-camState.lastY;
+  camState.yaw -= dx*0.008;
+  camState.pitch -= dy*0.008;
+  camState.pitch = Math.min(Math.PI/2-0.1, Math.max(0.2, camState.pitch));
+  camState.lastX=e.clientX;
+  camState.lastY=e.clientY;
+});
+
+box.addEventListener('pointerup',e=>{camState.dragging=false; box.releasePointerCapture?.(e.pointerId);});
+box.addEventListener('pointerleave',()=>{camState.dragging=false;});
+box.addEventListener('wheel',e=>{
+  e.preventDefault();
+  camState.radius += e.deltaY * 0.005;
+  camState.radius = Math.min(camState.maxRadius, Math.max(camState.minRadius, camState.radius));
+},{passive:false});
+
+function updateCamera(){
+  const x = camState.radius * Math.cos(camState.pitch) * Math.sin(camState.yaw);
+  const y = camState.radius * Math.sin(camState.pitch);
+  const z = camState.radius * Math.cos(camState.pitch) * Math.cos(camState.yaw);
+  cam.position.set(x, y + 1.5, z);
+  cam.lookAt(0, 0.8, 0);
+}
+
+function loop(){
+ requestAnimationFrame(loop);
+ const t=clk.getElapsedTime();
+ mT.emissiveIntensity=(step===2||step===4)?.5+.4*Math.sin(t*6):0;
+ mO.emissiveIntensity=(step===1||step===4)?.5+.4*Math.sin(t*6):0;
+ pcs.forEach(p=>{
+  const g=step>=3&&p.kind!=='p',tg=p.kind==='p'?(step>=3?p.gat:p.base):(g?p.gat:p.base);
+  p.obj.position.lerp(tg,.07);
+  let s=t>p.d?1:.01;
+  if((p.kind==='o'&&step===1)||(p.kind==='t'&&step===2))s=1.12+.1*Math.sin(t*6);
+  p.obj.scale.x+=(s-p.obj.scale.x)*.12;p.obj.scale.setScalar(p.obj.scale.x);
+ });
+ updateCamera();
+ ren.render(scene,cam);
+}
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const shuf=a=>a.sort(()=>Math.random()-.5);
+let qs=[],qi=0,score=0,locked=false,P=[],raf=0;
+const fx=$('fx'),cx=fx.getContext('2d');
+function fit(){fx.width=innerWidth;fx.height=innerHeight}addEventListener('resize',fit);fit();
+function say(txt,cls){setCharacter(cls==='happy'?'correct':cls==='sad'?'incorrect':'idle');const h=$('hero');h.classList.remove('happy','sad');if(cls)h.classList.add(cls);$('cap').textContent=txt;h.classList.add('talk');clearTimeout(window._tk);window._tk=setTimeout(()=>h.classList.remove('talk'),Math.min(7000,txt.length*70));if(speak&&window.speechSynthesis){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang='ar-SA';speechSynthesis.speak(u)}}
+function boom(big){for(let k=0;k<(big?5:3);k++)setTimeout(()=>{const x=innerWidth*(.2+Math.random()*.6),y=innerHeight*(.15+Math.random()*.35),col=`hsl(${R(0,360)},90%,60%)`;for(let i=0;i<40;i++){const a=Math.PI*2*i/40,s=2+Math.random()*4;P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:75,c:col,e:i%4===0?'⭐':null})}if(!raf)tick()},k*250)}
+function tick(){cx.clearRect(0,0,fx.width,fx.height);P=P.filter(p=>p.l>0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.06;p.l--;cx.globalAlpha=Math.min(1,p.l/30);if(p.e){cx.font='24px sans-serif';cx.fillText(p.e,p.x,p.y)}else{cx.fillStyle=p.c;cx.beginPath();cx.arc(p.x,p.y,3.5,0,7);cx.fill()}});cx.globalAlpha=1;raf=P.length?requestAnimationFrame(tick):0;if(!P.length)cx.clearRect(0,0,fx.width,fx.height)}
+function sad(){const f=$('face');f.textContent='😢';f.classList.remove('pop');void f.offsetWidth;f.classList.add('pop')}
+function mkQ(i){
+ const n=R(2,4),m=Math.floor(9/n),t=R(1,m),o=R(1,m),a=t*10+o,ans=a*n;
+ if(i%4===3){return R(0,1)?{p:`عند حساب ${AR(a)} × ${AR(n)}، ناتج ${AR(o)} × ${AR(n)} نكتبه تحت:`,opts:['الآحاد','العشرات'],c:0,h:'الآحاد تُضرب في الآحاد وتُكتب تحت الآحاد.'}:{p:`ماذا نضرب أولًا في ${AR(a)} × ${AR(n)}؟`,opts:['آحاد العدد','عشرات العدد'],c:0,h:'نبدأ دائمًا بالآحاد.'}}
+ if(i%2===1){const ok=Math.random()<.5;let s=ans;if(!ok){const cd=[ans+10,ans-10,ans+1,ans-1,o*n*10+t*n,ans+n].filter(x=>x!==ans&&x>0);s=cd[R(0,cd.length-1)]}return{p:`صح أم خطأ؟  ${AR(a)} × ${AR(n)} = ${AR(s)}`,opts:['صح ✔','خطأ ✘'],c:ok?0:1,h:`الناتج الصحيح ${AR(ans)}.`}}
+ const ds=[...new Set([ans+10,ans-10,t*n+o*n,a+n,ans+1,ans-1,ans+n].filter(x=>x!==ans&&x>0))];
+ const op=shuf([ans,...shuf(ds).slice(0,3)]);
+ return{p:`ما ناتج ${AR(a)} × ${AR(n)} ؟`,opts:op.map(AR),c:op.indexOf(ans),h:`${AR(o)}×${AR(n)}=${AR(o*n)} و${AR(t)}×${AR(n)} عشرات = ${AR(t*n*10)}، فالناتج ${AR(ans)}.`};
+}
+function head(){$('gs').textContent=`السؤال ${AR(qi+1)} من ${AR(10)} · ⭐ ${AR(score)}`}
+function render(){setCharacter('idle');locked=false;const q=qs[qi];head();$('gq').textContent=q.p;$('gn').style.display='none';$('go').innerHTML='';q.opts.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>answer(i,b);$('go').appendChild(b)})}
+function answer(i,b){if(locked)return;locked=true;const q=qs[qi],bs=[...$('go').children];
+ if(i===q.c){score++;b.classList.add('ok');boom();say(['أحسنتِ! 🎉','ممتاز! ⭐','برافو عليكِ! 👏','إجابة صحيحة! 🌟'][R(0,3)],'happy')}
+ else{b.classList.add('no');bs[q.c].classList.add('ok');sad();say('لا بأس! '+q.h+' حاولي في السؤال القادم 💪','sad')}
+ head();$('gn').style.display='';$('gn').textContent=qi<9?'التالي ⏭':'عرض النتيجة 🏆'}
+function finish(){$('gs').textContent='';$('gq').textContent=`نتيجتك: ${AR(score)} من ${AR(10)}  ${'⭐'.repeat(Math.max(1,Math.round(score/2)))}`;$('go').innerHTML='';$('gn').style.display='none';const b=document.createElement('button');b.textContent='🔄 العبي مرة أخرى';b.onclick=startGame;$('go').appendChild(b);
+ say(score>=8?'أنتِ بطلة الضرب! 🏆':score>=5?'جيد جدًا! راجعي الدرس وجرّبي مرة أخرى 😊':'لا تقلقي، شاهدي الدرس مرة أخرى وجرّبي من جديد 💜',score>=5?'happy':'sad');if(score>=5)boom(true);setCharacter('idle')}
+$('gn').onclick=()=>{if(qi<9){qi++;render();$('hero').classList.remove('happy','sad')}else finish()};
+function startGame(){qi=0;score=0;qs=Array.from({length:10},(_,i)=>mkQ(i));say('أهلًا بكِ في لعبة التحدي! أجيبي عن الأسئلة لتجمعي النجوم ⭐',null);render()}
+$('tabL').onclick=()=>{document.body.classList.remove('gm');$('hero').classList.remove('happy','sad');size();show()};
+$('tabG').onclick=()=>{if(timer)$('play').click();document.body.classList.add('gm');startGame()};
+build();show();loop();
+</script>
+</body>
+</html>
